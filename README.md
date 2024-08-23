@@ -21,7 +21,7 @@ Script files (`exe.bat` and `exe.ps1`) are provided for Windows users.
 - `exe.ps1`: Right-click `exe.ps1` and select `Run with PowerShell`.
 
 > [!NOTE]
-> It's always welcome to add batch files for Mac or Linux.
+> It's always welcome to add script files for Mac or Linux.
 > Please make one and open a pull request.
 
 ## Contributing
