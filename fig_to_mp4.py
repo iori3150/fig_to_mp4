@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import time
 
 import cv2
 
@@ -38,11 +39,30 @@ def images_to_video(image_folder, output_video, frame_rate):
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     video = cv2.VideoWriter(output_video, fourcc, frame_rate, (width, height))
 
+    # Start time for progress tracking
+    start_time = time.time()
+
     # Write images to the video
-    for image in images:
+    total_images = len(images)
+    for idx, image in enumerate(images):
         image_path = os.path.join(image_folder, image)
         frame = cv2.imread(image_path)
         video.write(frame)
+
+        # Progress calculation
+        current_time = time.time()
+        elapsed_time = current_time - start_time
+        percentage_complete = (idx + 1) / total_images * 100
+        estimated_total_time = elapsed_time / (idx + 1) * total_images
+        estimated_time_remaining = estimated_total_time - elapsed_time
+
+        # Log progress
+        print(
+            f"Processing file: {image} | "
+            f"Progress: {percentage_complete:.2f}% | "
+            f"Elapsed time: {elapsed_time:.2f}s | "
+            f"Estimated time remaining: {estimated_time_remaining:.2f}s"
+        )
 
     # Release the video file
     video.release()
