@@ -22,3 +22,6 @@ pip install opencv-python
 > [!NOTE]
 > It's always welcome to add batch files for Mac or Linux.
 > Please make one and open a pull request.
+
+## Contributing
+Any bug fixes or feature enhancements are welcome! To contribute, first [open an issue](https://opensource.guide/how-to-contribute/#opening-an-issue), then [open a pull request](https://opensource.guide/how-to-contribute/#opening-an-issue).
