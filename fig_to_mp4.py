@@ -49,13 +49,16 @@ def images_to_video(image_folder, output_video, frame_rate):
     print(f"Video file created: {output_video}")
 
 
-# Load configuration from external JSON file
 config_file = "config.json"
 config = load_config(config_file)
 
-# Use the settings from the configuration file
 image_folder = config["image_folder"]
 output_video = config["output_video"]
+frame_rate = config["frame_rate"]
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+image_folder = os.path.join(base_dir, config["image_folder"])
+output_video = os.path.join(base_dir, config["output_video"])
 frame_rate = config["frame_rate"]
 
 # Create video from images
