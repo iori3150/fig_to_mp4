@@ -7,16 +7,15 @@ pip install opencv-python
 ```
 
 ## Getting Started
-First, copy and paste `fig_to_mp4.py` and `config.json` to your working directory.
-
+First, copy and paste `fig_to_mp4.py` and `config.json` to your working directory.  
 Then adjust `config.json`. The paths must be relative to `fig_to_mp4.py` script.
 
-### Command Line Execution
+#### Command Line Execution
 ```shell
 python fig_to_mp4.py
 ```
 
-### Script Execution
+#### Script Execution
 Script files (`exe.bat` and `exe.ps1`) are provided for Windows users.
 - `exe.bat`: Double-click `exe.bat`
 - `exe.ps1`: Right-click `exe.ps1` and select `Run with PowerShell`.
