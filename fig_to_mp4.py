@@ -1,6 +1,19 @@
+import json
 import os
+import sys
 
 import cv2
+
+
+def load_config(config_file):
+    if not os.path.exists(config_file):
+        print(f"Error: Config file '{config_file}' not found.")
+        sys.exit(1)
+
+    with open(config_file, "r") as f:
+        config = json.load(f)
+
+    return config
 
 
 def images_to_video(image_folder, output_video, frame_rate):
@@ -36,9 +49,14 @@ def images_to_video(image_folder, output_video, frame_rate):
     print(f"Video file created: {output_video}")
 
 
-# Example usage
-image_folder = "./"  # Directory where images are stored
-output_video = "output.mp4"  # Name of the output video file
-frame_rate = 5
+# Load configuration from external JSON file
+config_file = "config.json"
+config = load_config(config_file)
 
+# Use the settings from the configuration file
+image_folder = config["image_folder"]
+output_video = config["output_video"]
+frame_rate = config["frame_rate"]
+
+# Create video from images
 images_to_video(image_folder, output_video, frame_rate)
