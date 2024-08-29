@@ -7,8 +7,9 @@ pip install opencv-python
 ```
 
 ## Getting Started
-1. Copy and paste `fig_to_mp4.py` and `config.json` to your working directory.
-2. Adjust `config.json`. The paths must be relative to `fig_to_mp4.py` script.
+1. Run fig_to_mp4.py.
+2. Select the directory where the image files are located.
+3. You can either select another directory or cancel to start the processing.
 
 #### 3.1. Command Line Execution
 ```shell

@@ -4,10 +4,7 @@ import sys
 import time
 import tkinter as tk
 from tkinter import filedialog
-import tkinter.filedialog
-
 import cv2
-
 
 def load_config(config_file):
     if not os.path.exists(config_file):
@@ -19,24 +16,30 @@ def load_config(config_file):
 
     return config
 
-def get_relative_path():
+def get_relative_paths():
     # Initialize tkinter
     root = tk.Tk()
     root.withdraw()  # Hide the root window
 
-    # Ask the user to select a directory
-    selected_dir = filedialog.askdirectory()
+    # Ask the user to select multiple directories
+    selected_dirs = []
+    while True:
+        selected_dir = filedialog.askdirectory()
+        if selected_dir:
+            selected_dirs.append(selected_dir)
+        else:
+            break
 
-    # Get the absolute path of the selected directory
-    absolute_path = os.path.abspath(selected_dir)
+    # Get the absolute paths of the selected directories
+    absolute_paths = [os.path.abspath(dir) for dir in selected_dirs]
 
     # Get the base directory (the directory where the script is located)
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Calculate the relative path
-    relative_path = os.path.relpath(absolute_path, base_dir)
+    # Calculate the relative paths
+    relative_paths = [os.path.relpath(path, base_dir) for path in absolute_paths]
 
-    return relative_path
+    return relative_paths
 
 def images_to_video(image_folder, output_video, frame_rate):
     # Get a list of image files and sort them by filename
@@ -48,7 +51,7 @@ def images_to_video(image_folder, output_video, frame_rate):
     images.sort()
 
     if len(images) == 0:
-        print("No images found.")
+        print(f"No images found in {image_folder}.")
         return
 
     # Get the size of the first image to set the video format
@@ -56,8 +59,8 @@ def images_to_video(image_folder, output_video, frame_rate):
     frame = cv2.imread(first_image_path)
     height, width, layers = frame.shape
 
-    # Set up the output video
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    # Define the codec and create VideoWriter object
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     video = cv2.VideoWriter(output_video, fourcc, frame_rate, (width, height))
 
     # Start time for progress tracking
@@ -87,19 +90,21 @@ def images_to_video(image_folder, output_video, frame_rate):
 
     # Release the video file
     video.release()
-    print(f"Video file created: {output_video}")
+    print(f"Video saved as {output_video}")
 
+def main():
+    # Load configuration
+    config = load_config("config.json")
 
-config_file = "config.json"
-config = load_config(config_file)
+    # Get relative paths of selected directories
+    relative_paths = get_relative_paths()
 
-output_video = config["output_video"]
-frame_rate = config["frame_rate"]
+    # Process each directory
+    for i, relative_path in enumerate(relative_paths):
+        image_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), relative_path)
+        output_video = f"output_video_{i+1}.mp4"
+        frame_rate = config.get("frame_rate", 30)
+        images_to_video(image_folder, output_video, frame_rate)
 
-base_dir = os.path.dirname(os.path.abspath(__file__))
-image_folder = get_relative_path()
-output_video = os.path.join(base_dir, config["output_video"])
-frame_rate = config["frame_rate"]
-
-# Create video from images
-images_to_video(image_folder, output_video, frame_rate)
+if __name__ == "__main__":
+    main()
