@@ -2,6 +2,9 @@ import json
 import os
 import sys
 import time
+import tkinter as tk
+from tkinter import filedialog
+import tkinter.filedialog
 
 import cv2
 
@@ -16,6 +19,24 @@ def load_config(config_file):
 
     return config
 
+def get_relative_path():
+    # Initialize tkinter
+    root = tk.Tk()
+    root.withdraw()  # Hide the root window
+
+    # Ask the user to select a directory
+    selected_dir = filedialog.askdirectory()
+
+    # Get the absolute path of the selected directory
+    absolute_path = os.path.abspath(selected_dir)
+
+    # Get the base directory (the directory where the script is located)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Calculate the relative path
+    relative_path = os.path.relpath(absolute_path, base_dir)
+
+    return relative_path
 
 def images_to_video(image_folder, output_video, frame_rate):
     # Get a list of image files and sort them by filename
@@ -72,12 +93,11 @@ def images_to_video(image_folder, output_video, frame_rate):
 config_file = "config.json"
 config = load_config(config_file)
 
-image_folder = config["image_folder"]
 output_video = config["output_video"]
 frame_rate = config["frame_rate"]
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-image_folder = os.path.join(base_dir, config["image_folder"])
+image_folder = get_relative_path()
 output_video = os.path.join(base_dir, config["output_video"])
 frame_rate = config["frame_rate"]
 
