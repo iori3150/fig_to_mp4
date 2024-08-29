@@ -102,8 +102,21 @@ def main():
     # Process each directory
     for i, relative_path in enumerate(relative_paths):
         image_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), relative_path)
-        output_video = f"output_video_{i+1}.mp4"
-        frame_rate = config.get("frame_rate", 30)
+        
+        # Determine output directory based on config["output video"]
+        if config["output_video"] == 0:
+            output_dir = "./"
+        elif config["output_video"] == 1:
+            output_dir = os.path.join(image_folder, "movie")
+            # Create output directory if it doesn't exist
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+        else:
+            raise ValueError("Invalid value for 'output video' in config. Must be 0 or 1.")
+        
+        
+        output_video = os.path.join(output_dir, f"output_video_{i+1}.mp4")
+        frame_rate = config["frame_rate"]
         images_to_video(image_folder, output_video, frame_rate)
 
 if __name__ == "__main__":
