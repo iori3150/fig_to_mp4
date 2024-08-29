@@ -4,6 +4,7 @@ Convert multiple images into a single MP4 file
 ## Requirement
 ```shell
 pip install opencv-python
+pip3 install pytk
 ```
 
 ## Getting Started
