@@ -6,16 +6,6 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, Listbox, Scrollbar, Spinbox, Button, Radiobutton, IntVar, StringVar
 import cv2
 
-def load_config(config_file):
-    if not os.path.exists(config_file):
-        print(f"Error: Config file '{config_file}' not found.")
-        sys.exit(1)
-
-    with open(config_file, "r") as f:
-        config = json.load(f)
-
-    return config
-
 def get_relative_paths_and_frame_rate():
     global listbox, frame_rate_spinbox, output_mode_var, root, progress_label, result
 
@@ -155,7 +145,6 @@ def images_to_video(image_folder, output_video, frame_rate, progress_label):
     progress_label.config(text=f"Video saved as {output_video}")
 
 def main():
-    config = load_config("config.json")
     relative_paths, frame_rate, output_mode = get_relative_paths_and_frame_rate()
 
     for i, relative_path in enumerate(relative_paths):
