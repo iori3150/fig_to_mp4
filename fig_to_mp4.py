@@ -83,7 +83,7 @@ def get_relative_paths_and_frame_rate():
     radio_button_0 = Radiobutton(output_mode_frame, text="Export src folder", variable=output_mode_var, value=0)
     radio_button_0.pack(side=tk.LEFT, padx=5)
 
-    radio_button_1 = Radiobutton(output_mode_frame, text="Export src folder", variable=output_mode_var, value=1)
+    radio_button_1 = Radiobutton(output_mode_frame, text="Export img folder", variable=output_mode_var, value=1)
     radio_button_1.pack(side=tk.LEFT, padx=5)
 
     done_button = tk.Button(root, text="Done", command=lambda: on_done())
