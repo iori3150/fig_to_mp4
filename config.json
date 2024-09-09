@@ -1,4 +1,5 @@
 {
-    "output_video": 0,
-    "frame_rate": 30
+    "image_folder": "./",
+    "output_video": "./output.mp4",
+    "frame_rate": 24
 }
